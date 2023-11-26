@@ -1,5 +1,6 @@
 package com.example.picpay.model.User;
 
+import com.example.picpay.DTO.UserDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,38 +9,39 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@AllArgsConstructor
-@NoArgsConstructor
-
-@Getter
-@Setter
-
 @Entity
 @Table(name = "tb_user")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String firstName;
+    private String firstname;
 
-    @Column(nullable = false)
-    private String lastName;
+    private String lastname;
 
-    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
-    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
     private BigDecimal balance;
 
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private UserType userType;
+    private UserType usertype;
+
+    public UserModel(UserDTO data){
+        this.firstname = data.firstname();
+        this.lastname = data.lastname();
+        this.cpf = data.cpf();
+        this.email = data.email();
+        this.password = data.password();
+        this.balance = data.balance();
+        this.usertype = data.usertype();
+    }
 }
